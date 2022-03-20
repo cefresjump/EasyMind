@@ -2,19 +2,18 @@
 
 
 <?import javafx.scene.layout.*?>
-
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.Menu?>
 
 <?import javafx.scene.control.MenuItem?>
-<VBox fx:controller="com.easymind.ui.MainView" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:controller="com.easymind.ui.MainView" xmlns:fx="http://javafx.com/fxml/">
     <MenuBar>
         <Menu text="编辑">
-            <MenuItem text="新建">
+            <MenuItem text="新建" onAction="#newFile">
             </MenuItem>
-            <MenuItem text="打开">
+            <MenuItem text="打开" onAction="#openFile">
             </MenuItem>
-            <MenuItem text="保存">
+            <MenuItem text="保存" onAction="#saveFile">
             </MenuItem>
         </Menu>
     </MenuBar>

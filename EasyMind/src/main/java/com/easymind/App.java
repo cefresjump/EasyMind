@@ -8,7 +8,6 @@ import com.easymind.ui.Controller;
 public class App extends Application {
     @Override
     public void start(Stage stage) {
-
         Controller.InitStage(stage);
         stage.show();
     }
