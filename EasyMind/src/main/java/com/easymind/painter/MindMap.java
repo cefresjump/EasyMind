@@ -16,4 +16,5 @@ public class MindMap implements Serializable {
     public String getMindMapName() {
         return mindMapName;
     }
+
 }

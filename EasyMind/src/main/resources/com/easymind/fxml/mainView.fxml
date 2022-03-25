@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="980.0" prefWidth="1850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easymind.ui.MainView">
+   <children>
+      <HBox onMousePressed="#dragStart" onMouseDragged="#dragEnd"  prefHeight="80.0" prefWidth="1850.0">
+         <children>
+            <Label fx:id="editButton" alignment="CENTER" onMouseReleased="#openMenu" prefHeight="80.0" prefWidth="80.0" text="编辑">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <contextMenu>
+                  <ContextMenu fx:id="menu">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#newFile" text="新建" />
+                        <MenuItem mnemonicParsing="false" onAction="#openFile" text="打开" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveFile" text="保存" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveAs" text="另存为" />
+                     </items>
+                  </ContextMenu>
+               </contextMenu>
+            </Label>
+            <Label fx:id="mindMapNameLabel" prefHeight="60.0" prefWidth="320.0" />
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="1050.0" spacing="30.0">
+               <children>
+                  <Button mnemonicParsing="false" text="新建子节点" />
+                  <Button mnemonicParsing="false" text="新建兄弟节点" />
+                  <Button mnemonicParsing="false" text="删除节点" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_RIGHT" prefHeight="60.0" prefWidth="400.0">
+               <children>
+                  <Label alignment="CENTER" onMouseReleased="#minimize" prefHeight="60.0" prefWidth="133.0" text="最小化" />
+                  <Label alignment="CENTER" onMouseReleased="#close" prefHeight="60.0" prefWidth="133.0" text="关闭" />
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <HBox prefHeight="940.0" prefWidth="1850.0">
+         <children>
+            <ScrollPane prefHeight="920.0" prefWidth="1442.0">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+               </content>
+            </ScrollPane>
+            <TabPane prefHeight="920.0" prefWidth="411.0" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                  <Tab closable="false" text="节点">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                  </Tab>
+                  <Tab closable="false" text="全局">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                  </Tab>
+                  <Tab closable="false" text="一览">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TreeView prefHeight="881.0" prefWidth="410.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+         </children>
+      </HBox>
+   </children>
+</VBox>

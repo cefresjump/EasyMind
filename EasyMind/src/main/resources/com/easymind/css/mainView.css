@@ -1,0 +1,8 @@
+#editButton {
+    -fx-background-color: rgb(217, 217, 217);
+}
+
+#menu {
+    -fx-font-size: 20px;
+    -fx-background-color: white;
+}

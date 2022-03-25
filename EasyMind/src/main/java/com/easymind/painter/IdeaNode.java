@@ -19,4 +19,5 @@ public class IdeaNode extends TextField implements Serializable {
     public List<IdeaNode> getChildIdea() {
         return childIdeas;
     }
+
 }
