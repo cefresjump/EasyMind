@@ -10,7 +10,7 @@ Features:
 
 1.new:Create a new mindmap
 
-2.save:Save the mindmap.The file ends with ".emind" but json structure
+2.save:Save the mindmap.The file ends with ".emind"
 
 3.open:Open an exist mindmap.
 
