@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Controller {
 
@@ -26,7 +27,7 @@ public class Controller {
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("fxml/mainView.fxml"));
             scene = new Scene(fxmlLoader.load());
-            scene.getStylesheets().addAll(App.class.getResource("css/mainView.css").toExternalForm());
+            scene.getStylesheets().addAll(Objects.requireNonNull(App.class.getResource("css/mainView.css")).toExternalForm());
         } catch (IOException e) {
             e.printStackTrace();
         }

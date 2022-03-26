@@ -1,20 +1,18 @@
 package com.easymind.painter;
 import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
-
 
 import java.io.Serializable;
 import java.util.List;
 
 
 public class IdeaNode extends TextField implements Serializable {
-    private final String text= "NewIdea";
-    private final List<IdeaNode> childIdeas = null;
 
-    public IdeaNode(){}
+    private List<IdeaNode> childIdeas;
 
-    //getText
-    //getText方法在java.scene.control.TextInputControl存在，且为final
+    public IdeaNode(){
+        this.setText("NewIdea");      //设定TextField的文本
+        childIdeas = null;
+    }
 
     public List<IdeaNode> getChildIdea() {
         return childIdeas;

@@ -2,19 +2,20 @@ package com.easymind.ui;
 
 import com.easymind.painter.MindMap;
 import com.easymind.util.FileManager;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
 import java.io.File;
 
 public class MainView{
+    //偏移量，用于窗口拖动
     private double xOffset = 0;
     private double yOffset = 0;
+
     private MindMap mindMap = null;
     private File root = null;
 
@@ -25,62 +26,69 @@ public class MainView{
     private ContextMenu menu;
 
     @FXML
-    private Label mindMapNameLabel;
+    private TextField mindMapNameTextField;
 
+    //editButton编辑按钮的功能（新建，打开，保存，另存为)
     @FXML
-    public void newFile(ActionEvent e) {
-        System.out.println("新建");
-    }
-
-    @FXML
-    public void openFile(ActionEvent e) {
-        File temp = FileManager.selectAndOpen();
-        if(temp==null) System.out.println("没打开");
-        else {
-            root = temp;
-            mindMap = FileManager.readFile(root);
-            if(mindMap==null) System.out.println("空");
-            else System.out.println("打开");
-        }
-    }
-
-    @FXML
-    public void saveFile(ActionEvent e) {
-        if(root!=null) FileManager.save(mindMap,root);
-        else if(mindMap!=null) FileManager.saveAs(mindMap);
-        else System.out.println("你保存了空气");
-    }
-
-    @FXML
-    public void saveAs(ActionEvent e){
-        if(mindMap!=null) FileManager.saveAs(mindMap);
-        else System.out.println("你保存了空气");
-    }
-
-    @FXML
-    public void openMenu(MouseEvent mouseEvent) {
+    private void openMenu() {
         if(menu.isShowing()) menu.hide();
         else menu.show(editButton,Side.BOTTOM,0,0);
     }
 
     @FXML
-    public void minimize(MouseEvent mouseEvent) {
-        Controller.stageMinimize();
+    private void newFile() {
+        mindMap = new MindMap();
+        mindMapNameTextField.setText(mindMap.getMindMapName());
+        mindMapNameTextField.setEditable(true);
     }
 
     @FXML
-    public void close(MouseEvent mouseEvent) {
-        Controller.stageClose();
+    private void openFile() {
+        File temp = FileManager.selectAndOpen();
+        if(temp!=null){
+            root = temp;
+            mindMap = FileManager.readFile(root);
+            if(mindMap!=null) System.out.println("打开");
+        }
     }
 
     @FXML
-    public void dragStart(MouseEvent mouseEvent) {
+    private void saveFile() {
+        if(root!=null) FileManager.save(mindMap,root);
+        else if(mindMap!=null) FileManager.saveAs(mindMap);
+    }
+
+    @FXML
+    private void saveAs(){
+        if(mindMap!=null) FileManager.saveAs(mindMap);
+    }
+
+    //在编辑按钮右侧的mindMapNameTextField文本输入栏功能（修改思维导图名称)
+    @FXML
+    public void editMindMapName() {
+        mindMap.setMindMapName(mindMapNameTextField.getText());
+    }
+
+    //窗口操作（窗口拖动，最小化，关闭）
+    @FXML
+    private void dragStart(MouseEvent mouseEvent) {
         xOffset = mouseEvent.getSceneX();
         yOffset = mouseEvent.getSceneY();
     }
 
     @FXML
-    public void dragEnd(MouseEvent mouseEvent) {
+    private void dragEnd(MouseEvent mouseEvent) {
         Controller.dragStage(xOffset,yOffset,mouseEvent.getScreenX(),mouseEvent.getScreenY());
     }
+
+    @FXML
+    private void minimize() {
+        Controller.stageMinimize();
+    }
+
+    @FXML
+    private void close() {
+        Controller.stageClose();
+    }
+
 }
