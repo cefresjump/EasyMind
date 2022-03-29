@@ -14,14 +14,11 @@ public class Controller {
     private static Stage stage;
 
     public static void initStage(Stage stage) {
-
         Controller.setStage(stage);
 
         stage.setTitle("EasyMind");
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.setResizable(false);
-        stage.setMinWidth(1850);
-        stage.setMinHeight(1020);
+        stage.initStyle(StageStyle.DECORATED);
+        stage.setResizable(true);
 
         Scene scene = null;
         try{
@@ -29,7 +26,7 @@ public class Controller {
             scene = new Scene(fxmlLoader.load());
             scene.getStylesheets().addAll(Objects.requireNonNull(App.class.getResource("css/mainView.css")).toExternalForm());
         } catch (IOException e) {
-            e.printStackTrace();
+            WarnPage.WarnReport(WarnPage.WARN_TYPE.STAGE_LOAD_FAILED);
         }
 
         stage.setScene(scene);

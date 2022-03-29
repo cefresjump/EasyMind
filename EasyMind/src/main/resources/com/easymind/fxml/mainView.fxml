@@ -36,7 +36,7 @@
    </HBox>
    <HBox prefHeight="940.0" prefWidth="1850.0">
       <ScrollPane prefHeight="920.0" prefWidth="1442.0">
-         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0"/>
+         <AnchorPane fx:id="canvas" minHeight="0.0" minWidth="0.0" prefHeight="920.0" prefWidth="1442.0"/>
       </ScrollPane>
       <TabPane prefHeight="920.0" prefWidth="411.0" tabClosingPolicy="UNAVAILABLE">
          <Tab closable="false" text="节点">

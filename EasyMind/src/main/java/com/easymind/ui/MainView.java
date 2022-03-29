@@ -1,6 +1,7 @@
 package com.easymind.ui;
 
-import com.easymind.painter.MindMap;
+import com.easymind.beans.IdeaNode;
+import com.easymind.beans.MindMap;
 import com.easymind.util.FileManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
@@ -8,6 +9,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.File;
 
@@ -28,6 +30,9 @@ public class MainView{
     @FXML
     private TextField mindMapNameTextField;
 
+    @FXML
+    private AnchorPane canvas;
+
     //editButton编辑按钮的功能（新建，打开，保存，另存为)
     @FXML
     private void openMenu() {
@@ -38,17 +43,16 @@ public class MainView{
     @FXML
     private void newFile() {
         mindMap = new MindMap();
-        mindMapNameTextField.setText(mindMap.getMindMapName());
-        mindMapNameTextField.setEditable(true);
+        initMainView();
     }
 
     @FXML
     private void openFile() {
-        File temp = FileManager.selectAndOpen();
+        File temp = FileManager.selectFile();
         if(temp!=null){
             root = temp;
             mindMap = FileManager.readFile(root);
-            if(mindMap!=null) System.out.println("打开");
+            if(mindMap!=null) initMainView();
         }
     }
 
@@ -91,4 +95,19 @@ public class MainView{
         Controller.stageClose();
     }
 
+    private void initMainView(){
+        mindMapNameTextField.setText(mindMap.getMindMapName());
+        mindMapNameTextField.setEditable(true);
+
+
+        refreshCanvas();
+
+        System.out.println("加载完毕");
+    }
+
+    private void refreshCanvas(){
+        IdeaNode centralIdea = mindMap.getCentralIdea();
+        canvas.getChildren().add(centralIdea);
+        AnchorPane.setLeftAnchor(centralIdea, 2000.0);
+    }
 }

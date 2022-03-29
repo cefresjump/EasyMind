@@ -1,6 +1,6 @@
 package com.easymind.util;
 
-import com.easymind.painter.MindMap;
+import com.easymind.beans.MindMap;
 import com.easymind.ui.WarnPage;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -14,7 +14,7 @@ public class FileManager {
         FileManager.stage =stage;
     }
 
-    public static File selectAndOpen(){
+    public static File selectFile(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("select a emind file");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("EMIND","*.emind"));
@@ -31,7 +31,6 @@ public class FileManager {
             WarnPage.WarnReport(WarnPage.WARN_TYPE.OPEN_FAILED);
             return null;
         }
-        if(mindMap==null) WarnPage.WarnReport(WarnPage.WARN_TYPE.OPEN_FAILED);
         return mindMap;
     }
 
@@ -49,11 +48,11 @@ public class FileManager {
         try {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(root));
             objectOutputStream.writeObject(mindMap);
-        } catch (FileNotFoundException| NotSerializableException exception) {
+            objectOutputStream.close();
+        } catch (IOException e) {
             WarnPage.WarnReport(WarnPage.WARN_TYPE.SAVE_FAILED);
             return;
         }
-        catch (IOException e){}
         WarnPage.WarnReport(WarnPage.WARN_TYPE.SAVE_SUCCESS);
     }
 }

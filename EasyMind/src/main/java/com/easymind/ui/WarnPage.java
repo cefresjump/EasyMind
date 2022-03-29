@@ -9,6 +9,7 @@ public class WarnPage {
          SAVE_SUCCESS,
 
          //WARNING
+         STAGE_LOAD_FAILED,
          SAVE_FAILED,
          OPEN_FAILED,
     }
@@ -19,8 +20,14 @@ public class WarnPage {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION,"保存成功",ButtonType.CLOSE);
                 alert.show();
             }
+            case STAGE_LOAD_FAILED -> {
+                Alert alert = new Alert(Alert.AlertType.WARNING,"界面打开失败",ButtonType.CLOSE);
+                alert.showAndWait();
+                System.exit(1);
+            }
             case SAVE_FAILED -> {
                 Alert alert = new Alert(Alert.AlertType.WARNING,"保存失败",ButtonType.CLOSE);
+                alert.show();
             }
             case OPEN_FAILED -> {
                 Alert alert = new Alert(Alert.AlertType.WARNING,"文件已损坏",ButtonType.CLOSE);
