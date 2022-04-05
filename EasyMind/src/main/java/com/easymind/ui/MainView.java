@@ -1,12 +1,12 @@
 package com.easymind.ui;
 
-import com.easymind.beans.IdeaNode;
 import com.easymind.beans.MindMap;
 import com.easymind.util.FileManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -31,6 +31,9 @@ public class MainView{
     private TextField mindMapNameTextField;
 
     @FXML
+    private ScrollPane scrollBoard;
+
+    @FXML
     private AnchorPane canvas;
 
     //editButton编辑按钮的功能（新建，打开，保存，另存为)
@@ -43,6 +46,7 @@ public class MainView{
     @FXML
     private void newFile() {
         mindMap = new MindMap();
+        root = null;
         initMainView();
     }
 
@@ -95,19 +99,26 @@ public class MainView{
         Controller.stageClose();
     }
 
+    @FXML
+    private void newChildNode(MouseEvent mouseEvent) {
+    }
+
+    @FXML
+    private void newBrotherNode(MouseEvent mouseEvent) {
+    }
+
+    @FXML
+    private void deleteNode(MouseEvent mouseEvent) {
+    }
+
     private void initMainView(){
         mindMapNameTextField.setText(mindMap.getMindMapName());
         mindMapNameTextField.setEditable(true);
 
-
-        refreshCanvas();
-
-        System.out.println("加载完毕");
-    }
-
-    private void refreshCanvas(){
-        IdeaNode centralIdea = mindMap.getCentralIdea();
-        canvas.getChildren().add(centralIdea);
-        AnchorPane.setLeftAnchor(centralIdea, 2000.0);
+        scrollBoard.setHvalue(0.5);
+        scrollBoard.setVvalue(0.5);
+        
+        AnchorUtil.init(canvas,mindMap);
+        AnchorUtil.refreshCanvas();
     }
 }

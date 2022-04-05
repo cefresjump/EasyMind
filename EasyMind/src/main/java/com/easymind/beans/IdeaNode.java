@@ -1,6 +1,5 @@
 package com.easymind.beans;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+
 import javafx.scene.control.TextField;
 
 import java.io.Serializable;
@@ -11,15 +10,22 @@ public class IdeaNode extends TextField implements Serializable {
 
     private String message = "NewIdea";
     private final List<IdeaNode> childIdeas;
+    private final IdeaNode nodeParent;
 
-    public IdeaNode(){
-
-        this.setText("message");      //设定TextField的文本
+    public IdeaNode(IdeaNode parent){
+        this.nodeParent=parent;
+        this.setMinWidth(200);
+        this.setMinHeight(40);
+        this.setText(message);      //设定TextField的文本
         this.setOnAction(actionEvent -> message = getText());
         childIdeas = null;
     }
 
     public List<IdeaNode> getChildIdea() {
         return childIdeas;
+    }
+
+    public IdeaNode getNodeParent() {
+        return nodeParent;
     }
 }

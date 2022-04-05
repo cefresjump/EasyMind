@@ -25,9 +25,9 @@
       </Label>
       <TextField fx:id="mindMapNameTextField" onAction="#editMindMapName" editable="false" prefHeight="60.0" prefWidth="320.0"/>
       <HBox alignment="CENTER" prefHeight="60.0" prefWidth="1050.0" spacing="30.0">
-         <Button mnemonicParsing="false" text="新建子节点"/>
-         <Button mnemonicParsing="false" text="新建兄弟节点"/>
-         <Button mnemonicParsing="false" text="删除节点"/>
+         <Button onMouseReleased="#newChildNode" text="新建子节点"/>
+         <Button onMouseReleased="#newBrotherNode" text="新建兄弟节点"/>
+         <Button onMouseReleased="#deleteNode" text="删除节点"/>
       </HBox>
       <HBox alignment="TOP_RIGHT" prefHeight="60.0" prefWidth="400.0">
          <Label alignment="CENTER" onMouseReleased="#minimize" prefHeight="60.0" prefWidth="133.0" text="最小化"/>
@@ -35,8 +35,8 @@
       </HBox>
    </HBox>
    <HBox prefHeight="940.0" prefWidth="1850.0">
-      <ScrollPane prefHeight="920.0" prefWidth="1442.0">
-         <AnchorPane fx:id="canvas" minHeight="0.0" minWidth="0.0" prefHeight="920.0" prefWidth="1442.0"/>
+      <ScrollPane fx:id="scrollBoard" prefHeight="920.0" prefWidth="1442.0">
+         <AnchorPane fx:id="canvas" minHeight="0.0" minWidth="0.0" prefHeight="2000.0" prefWidth="3000.0"/>
       </ScrollPane>
       <TabPane prefHeight="920.0" prefWidth="411.0" tabClosingPolicy="UNAVAILABLE">
          <Tab closable="false" text="节点">

@@ -41,7 +41,7 @@ public class FileManager {
         fileChooser.setTitle("select a directory");
 
         File file = fileChooser.showSaveDialog(stage);
-        save(mindMap,file);
+        if(file!=null) save(mindMap,file);
     }
 
     public static void save(MindMap mindMap, File root){
