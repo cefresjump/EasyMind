@@ -24,7 +24,7 @@ public class Controller {
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("fxml/mainView.fxml"));
             scene = new Scene(fxmlLoader.load());
-            scene.getStylesheets().addAll(Objects.requireNonNull(App.class.getResource("css/mainView.css")).toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("css/mainView.css")).toExternalForm());
         } catch (IOException e) {
             WarnPage.WarnReport(WarnPage.WARN_TYPE.STAGE_LOAD_FAILED);
         }

@@ -1,13 +1,11 @@
 package com.easymind.ui;
 
+import com.easymind.beans.IdeaNode;
 import com.easymind.beans.MindMap;
 import com.easymind.util.FileManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -18,8 +16,9 @@ public class MainView{
     private double xOffset = 0;
     private double yOffset = 0;
 
-    private MindMap mindMap = null;
-    private File root = null;
+    private static MindMap mindMap = null;
+    private static File root = null;
+    private static IdeaNode selectedNode = null;
 
     @FXML
     private Label editButton;
@@ -35,6 +34,9 @@ public class MainView{
 
     @FXML
     private AnchorPane canvas;
+
+    @FXML
+    private TreeView<String> generalView;
 
     //editButton编辑按钮的功能（新建，打开，保存，另存为)
     @FXML
@@ -100,15 +102,52 @@ public class MainView{
     }
 
     @FXML
-    private void newChildNode(MouseEvent mouseEvent) {
+    private void newChildNode() {
+        IdeaNode child = new IdeaNode(selectedNode);
+        AnchorUtil.refreshCanvas();
+        TreeViewUtil.refresh(generalView,mindMap.getCentralIdea());
     }
 
     @FXML
-    private void newBrotherNode(MouseEvent mouseEvent) {
+    private void newBrotherNode() {
+        if(selectedNode.getNodeParent()!=null){
+            IdeaNode brother = new IdeaNode(selectedNode.getNodeParent());
+            AnchorUtil.refreshCanvas();
+            TreeViewUtil.refresh(generalView,mindMap.getCentralIdea());
+        }
     }
 
     @FXML
-    private void deleteNode(MouseEvent mouseEvent) {
+    private void deleteNode() {
+        if(selectedNode.getNodeParent()!=null){
+            selectedNode.setNodeParent(null);
+            selectedNode.getNodeParent().getChildIdea().remove(selectedNode);
+            selectedNode = null;
+            AnchorUtil.refreshCanvas();
+            TreeViewUtil.refresh(generalView,mindMap.getCentralIdea());
+        }
+    }
+
+    @FXML
+    private void setAlignLeftToRight(){
+        mindMap.setALIGNMENT(AnchorUtil.ALIGNMENT.LEFT_TO_RIGHT);
+        AnchorUtil.refreshCanvas();
+    }
+
+    @FXML
+    private void setAlignCenter(){
+        mindMap.setALIGNMENT(AnchorUtil.ALIGNMENT.CENTER);
+        AnchorUtil.refreshCanvas();
+    }
+
+    @FXML
+    private void setAlignRightToLeft(){
+        mindMap.setALIGNMENT(AnchorUtil.ALIGNMENT.RIGHT_TO_LEFT);
+        AnchorUtil.refreshCanvas();
+    }
+
+    public static void setSelectedNode(IdeaNode node){
+        selectedNode = node;
     }
 
     private void initMainView(){
@@ -120,5 +159,7 @@ public class MainView{
         
         AnchorUtil.init(canvas,mindMap);
         AnchorUtil.refreshCanvas();
+
+        TreeViewUtil.refresh(generalView,mindMap.getCentralIdea());
     }
 }

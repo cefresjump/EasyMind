@@ -38,8 +38,8 @@ public class AnchorUtil {
         IdeaNode centralIdea = mindMap.getCentralIdea();
         double xOffset = 0;
         double yOffset = 0;
+        canvas.getChildren().removeAll();
         setAnchor(centralIdea,xOffset,yOffset);
-
     }
 
     public static void setAnchor(IdeaNode node,double xOffset,double yOffset){

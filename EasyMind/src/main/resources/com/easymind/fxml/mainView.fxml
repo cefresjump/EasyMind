@@ -1,55 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="980.0" prefWidth="1850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.easymind.ui.MainView">
-   <HBox onMousePressed="#dragStart" onMouseDragged="#dragEnd" prefHeight="80.0" prefWidth="1850.0">
-      <Label fx:id="editButton" alignment="CENTER" onMouseReleased="#openMenu" prefHeight="80.0" prefWidth="80.0"
-             text="编辑">
-         <font>
-            <Font size="20.0"/>
-         </font>
-         <contextMenu>
-            <ContextMenu fx:id="menu">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#newFile" text="新建"/>
-                  <MenuItem mnemonicParsing="false" onAction="#openFile" text="打开"/>
-                  <MenuItem mnemonicParsing="false" onAction="#saveFile" text="保存"/>
-                  <MenuItem mnemonicParsing="false" onAction="#saveAs" text="另存为"/>
-               </items>
-            </ContextMenu>
-         </contextMenu>
-      </Label>
-      <TextField fx:id="mindMapNameTextField" onAction="#editMindMapName" editable="false" prefHeight="60.0" prefWidth="320.0"/>
-      <HBox alignment="CENTER" prefHeight="60.0" prefWidth="1050.0" spacing="30.0">
-         <Button onMouseReleased="#newChildNode" text="新建子节点"/>
-         <Button onMouseReleased="#newBrotherNode" text="新建兄弟节点"/>
-         <Button onMouseReleased="#deleteNode" text="删除节点"/>
+<VBox prefHeight="980.0" prefWidth="1850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easymind.ui.MainView">
+   <children>
+      <HBox onMouseDragged="#dragEnd" onMousePressed="#dragStart" prefHeight="80.0" prefWidth="1850.0">
+         <children>
+            <Label fx:id="editButton" alignment="CENTER" onMouseReleased="#openMenu" prefHeight="80.0" prefWidth="80.0" text="编辑">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <contextMenu>
+                  <ContextMenu fx:id="menu">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#newFile" text="新建" />
+                        <MenuItem mnemonicParsing="false" onAction="#openFile" text="打开" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveFile" text="保存" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveAs" text="另存为" />
+                     </items>
+                  </ContextMenu>
+               </contextMenu>
+            </Label>
+            <TextField fx:id="mindMapNameTextField" editable="false" onAction="#editMindMapName" prefHeight="60.0" prefWidth="320.0" />
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="1050.0" spacing="30.0">
+               <children>
+                  <Button onMouseReleased="#newChildNode" text="新建子节点" />
+                  <Button onMouseReleased="#newBrotherNode" text="新建兄弟节点" />
+                  <Button onMouseReleased="#deleteNode" text="删除节点" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_RIGHT" prefHeight="60.0" prefWidth="400.0">
+               <children>
+                  <Label alignment="CENTER" onMouseReleased="#minimize" prefHeight="60.0" prefWidth="133.0" text="最小化" />
+                  <Label alignment="CENTER" onMouseReleased="#close" prefHeight="60.0" prefWidth="133.0" text="关闭" />
+               </children>
+            </HBox>
+         </children>
       </HBox>
-      <HBox alignment="TOP_RIGHT" prefHeight="60.0" prefWidth="400.0">
-         <Label alignment="CENTER" onMouseReleased="#minimize" prefHeight="60.0" prefWidth="133.0" text="最小化"/>
-         <Label alignment="CENTER" onMouseReleased="#close" prefHeight="60.0" prefWidth="133.0" text="关闭"/>
+      <HBox prefHeight="940.0" prefWidth="1850.0">
+         <children>
+            <ScrollPane fx:id="scrollBoard" prefHeight="920.0" prefWidth="1442.0">
+               <content>
+                  <AnchorPane fx:id="canvas" minHeight="0.0" minWidth="0.0" prefHeight="2000.0" prefWidth="3000.0" />
+               </content>
+            </ScrollPane>
+            <TabPane prefHeight="920.0" prefWidth="411.0" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                  <Tab closable="false" text="节点">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                  </Tab>
+                  <Tab closable="false" text="全局">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="14.0" layoutY="14.0" prefHeight="42.0" prefWidth="196.0" text="布局设置：" />
+                              <Button layoutX="14.0" layoutY="67.0" mnemonicParsing="false" onMouseReleased="#setAlignLeftToRight" text="左至右" />
+                              <Button layoutX="176.0" layoutY="67.0" mnemonicParsing="false" onMouseReleased="#setAlignCenter" text="中心" />
+                              <Button layoutX="327.0" layoutY="67.0" mnemonicParsing="false" onMouseReleased="#setAlignRightToLeft" text="右至左" />
+                           </children></AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab closable="false" text="一览">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TreeView fx:id="generalView" prefHeight="881.0" prefWidth="410.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+         </children>
       </HBox>
-   </HBox>
-   <HBox prefHeight="940.0" prefWidth="1850.0">
-      <ScrollPane fx:id="scrollBoard" prefHeight="920.0" prefWidth="1442.0">
-         <AnchorPane fx:id="canvas" minHeight="0.0" minWidth="0.0" prefHeight="2000.0" prefWidth="3000.0"/>
-      </ScrollPane>
-      <TabPane prefHeight="920.0" prefWidth="411.0" tabClosingPolicy="UNAVAILABLE">
-         <Tab closable="false" text="节点">
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
-         </Tab>
-         <Tab closable="false" text="全局">
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
-         </Tab>
-         <Tab closable="false" text="一览">
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <TreeView prefHeight="881.0" prefWidth="410.0"/>
-            </AnchorPane>
-         </Tab>
-      </TabPane>
-   </HBox>
+   </children>
 </VBox>
