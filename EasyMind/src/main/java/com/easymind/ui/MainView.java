@@ -38,7 +38,7 @@ public class MainView{
     @FXML
     private TreeView<String> generalView;
 
-    //editButton编辑按钮的功能（新建，打开，保存，另存为)
+    //editButton编辑按钮的功能（新建，打开，保存，另存为,导出)
     @FXML
     private void openMenu() {
         if(menu.isShowing()) menu.hide();
@@ -73,6 +73,11 @@ public class MainView{
         if(mindMap!=null) FileManager.saveAs(mindMap);
     }
 
+    @FXML
+    private void exportAsPNG(){
+
+    }
+
     //在编辑按钮右侧的mindMapNameTextField文本输入栏功能（修改思维导图名称)
     @FXML
     public void editMindMapName() {
@@ -103,51 +108,50 @@ public class MainView{
 
     @FXML
     private void newChildNode() {
-        IdeaNode child = new IdeaNode(selectedNode);
-        AnchorUtil.refreshCanvas();
-        TreeViewUtil.refresh(generalView,mindMap.getCentralIdea());
+        if(selectedNode!=null){
+            selectedNode.newChild();
+
+            DisplayUtil.refreshCanvas();
+            TreeViewUtil.refreshGeneralView(generalView,mindMap.getCentralIdea());
+        }
     }
 
     @FXML
     private void newBrotherNode() {
         if(selectedNode.getNodeParent()!=null){
-            IdeaNode brother = new IdeaNode(selectedNode.getNodeParent());
-            AnchorUtil.refreshCanvas();
-            TreeViewUtil.refresh(generalView,mindMap.getCentralIdea());
+           selectedNode.newBrother();
+
+            DisplayUtil.refreshCanvas();
+            TreeViewUtil.refreshGeneralView(generalView,mindMap.getCentralIdea());
         }
     }
 
     @FXML
     private void deleteNode() {
         if(selectedNode.getNodeParent()!=null){
-            selectedNode.setNodeParent(null);
             selectedNode.getNodeParent().getChildIdea().remove(selectedNode);
-            selectedNode = null;
-            AnchorUtil.refreshCanvas();
-            TreeViewUtil.refresh(generalView,mindMap.getCentralIdea());
+
+            DisplayUtil.refreshCanvas();
+            TreeViewUtil.refreshGeneralView(generalView,mindMap.getCentralIdea());
         }
     }
 
     @FXML
     private void setAlignLeftToRight(){
-        mindMap.setALIGNMENT(AnchorUtil.ALIGNMENT.LEFT_TO_RIGHT);
-        AnchorUtil.refreshCanvas();
+        mindMap.setALIGNMENT(DisplayUtil.ALIGNMENT.LEFT_TO_RIGHT);
+        DisplayUtil.refreshCanvas();
     }
 
     @FXML
     private void setAlignCenter(){
-        mindMap.setALIGNMENT(AnchorUtil.ALIGNMENT.CENTER);
-        AnchorUtil.refreshCanvas();
+        mindMap.setALIGNMENT(DisplayUtil.ALIGNMENT.CENTER);
+        DisplayUtil.refreshCanvas();
     }
 
     @FXML
     private void setAlignRightToLeft(){
-        mindMap.setALIGNMENT(AnchorUtil.ALIGNMENT.RIGHT_TO_LEFT);
-        AnchorUtil.refreshCanvas();
-    }
-
-    public static void setSelectedNode(IdeaNode node){
-        selectedNode = node;
+        mindMap.setALIGNMENT(DisplayUtil.ALIGNMENT.RIGHT_TO_LEFT);
+        DisplayUtil.refreshCanvas();
     }
 
     private void initMainView(){
@@ -157,9 +161,14 @@ public class MainView{
         scrollBoard.setHvalue(0.5);
         scrollBoard.setVvalue(0.5);
         
-        AnchorUtil.init(canvas,mindMap);
-        AnchorUtil.refreshCanvas();
+        DisplayUtil.init(canvas,mindMap);
+        DisplayUtil.refreshCanvas();
 
-        TreeViewUtil.refresh(generalView,mindMap.getCentralIdea());
+        TreeViewUtil.refreshGeneralView(generalView,mindMap.getCentralIdea());
     }
+
+    public static void setSelectedNode(IdeaNode node){
+        selectedNode = node;
+    }
+
 }

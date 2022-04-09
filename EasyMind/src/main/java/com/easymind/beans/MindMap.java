@@ -1,27 +1,27 @@
 package com.easymind.beans;
 
 
-import com.easymind.ui.AnchorUtil;
+import com.easymind.ui.DisplayUtil;
 
 import java.io.Serializable;
 
 public class MindMap implements Serializable {
 
     private String mindMapName;
-    private IdeaNode centralIdea;
-    private AnchorUtil.ALIGNMENT ALIGNMENT;
+    private final IdeaNode centralIdea;
+    private DisplayUtil.ALIGNMENT ALIGNMENT;
 
     public MindMap(){
         this.mindMapName = "newMindMap";
         this.centralIdea = new IdeaNode(null);
-        ALIGNMENT = AnchorUtil.ALIGNMENT.LEFT_TO_RIGHT;
+        ALIGNMENT = DisplayUtil.ALIGNMENT.LEFT_TO_RIGHT;
     }
 
     public String getMindMapName() {
         return mindMapName;
     }
 
-    public AnchorUtil.ALIGNMENT getALIGNMENT() {
+    public DisplayUtil.ALIGNMENT getALIGNMENT() {
         return ALIGNMENT;
     }
 
@@ -33,7 +33,7 @@ public class MindMap implements Serializable {
         this.mindMapName = mindMapName;
     }
 
-    public void setALIGNMENT(AnchorUtil.ALIGNMENT ALIGNMENT) {
+    public void setALIGNMENT(DisplayUtil.ALIGNMENT ALIGNMENT) {
         this.ALIGNMENT = ALIGNMENT;
     }
 }
