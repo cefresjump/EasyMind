@@ -106,13 +106,14 @@ public class MainView{
         Controller.stageClose();
     }
 
+    //节点的新增，删除操作
     @FXML
     private void newChildNode() {
         if(selectedNode!=null){
             selectedNode.newChild();
 
             DisplayUtil.refreshCanvas();
-            TreeViewUtil.refreshGeneralView(generalView,mindMap.getCentralIdea());
+            TreeViewUtil.refreshGeneralView();
         }
     }
 
@@ -122,7 +123,7 @@ public class MainView{
            selectedNode.newBrother();
 
             DisplayUtil.refreshCanvas();
-            TreeViewUtil.refreshGeneralView(generalView,mindMap.getCentralIdea());
+            TreeViewUtil.refreshGeneralView();
         }
     }
 
@@ -130,9 +131,9 @@ public class MainView{
     private void deleteNode() {
         if(selectedNode.getNodeParent()!=null){
             selectedNode.getNodeParent().getChildIdea().remove(selectedNode);
-
+            
             DisplayUtil.refreshCanvas();
-            TreeViewUtil.refreshGeneralView(generalView,mindMap.getCentralIdea());
+            TreeViewUtil.refreshGeneralView();
         }
     }
 
@@ -164,7 +165,8 @@ public class MainView{
         DisplayUtil.init(canvas,mindMap);
         DisplayUtil.refreshCanvas();
 
-        TreeViewUtil.refreshGeneralView(generalView,mindMap.getCentralIdea());
+        TreeViewUtil.init(generalView,mindMap.getCentralIdea());
+        TreeViewUtil.refreshGeneralView();
     }
 
     public static void setSelectedNode(IdeaNode node){

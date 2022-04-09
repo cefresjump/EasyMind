@@ -5,7 +5,15 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
 public class TreeViewUtil {
-    public static void refreshGeneralView(TreeView<String> generalView, IdeaNode centralIdea){
+    private static TreeView<String> generalView;
+    private static IdeaNode centralIdea;
+
+    public static void init(TreeView<String> generalView, IdeaNode centralIdea){
+        TreeViewUtil.generalView = generalView;
+        TreeViewUtil.centralIdea = centralIdea;
+    }
+
+    public static void refreshGeneralView(){
         TreeItem<String> root = createTreeItem(centralIdea);
         generalView.setRoot(root);
     }

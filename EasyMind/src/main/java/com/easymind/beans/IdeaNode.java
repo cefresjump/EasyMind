@@ -1,6 +1,7 @@
 package com.easymind.beans;
 
 import com.easymind.ui.MainView;
+import com.easymind.ui.TreeViewUtil;
 import javafx.scene.control.TextField;
 
 import java.io.Serializable;
@@ -8,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IdeaNode implements Serializable {
-    private final TextField textField;
+    private final transient TextField textField;
 
-    private String message = "NewIdea";
+    private String message = "newIdea";
     private final int depth;
     private final IdeaNode nodeParent;
     private final List<IdeaNode> childIdeas;
@@ -21,7 +22,10 @@ public class IdeaNode implements Serializable {
         this.textField.setMinWidth(200);
         this.textField.setMinHeight(40);
         this.textField.setText(message);      //设定TextField的文本
-        this.textField.setOnAction(edited -> message = textField.getText());
+        this.textField.setOnAction(edited -> {
+            message = textField.getText();
+            TreeViewUtil.refreshGeneralView();
+        });
         this.textField.setOnMouseReleased(selectNode -> MainView.setSelectedNode(IdeaNode.this));
 
         if(parent==null) depth = 1;

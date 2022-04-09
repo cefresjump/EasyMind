@@ -50,6 +50,7 @@ public class FileManager {
             objectOutputStream.writeObject(mindMap);
             objectOutputStream.close();
         } catch (IOException e) {
+            e.printStackTrace();
             WarnPage.WarnReport(WarnPage.WARN_TYPE.SAVE_FAILED);
             return;
         }
