@@ -8,5 +8,6 @@
 }
 
 .text-field{
-    -fx-border-color: white;
+    -fx-border-color: black;
+    -fx-border-radius: 5px;
 }

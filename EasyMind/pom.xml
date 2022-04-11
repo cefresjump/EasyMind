@@ -25,6 +25,11 @@
             <artifactId>javafx-fxml</artifactId>
             <version>18</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>18</version>
+        </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>

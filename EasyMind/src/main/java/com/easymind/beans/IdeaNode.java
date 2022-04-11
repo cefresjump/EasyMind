@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IdeaNode implements Serializable {
-    private final transient TextField textField;
+    private static final double DEFAULT_WIDTH = 200;
+    private static final double DEFAULT_HEIGHT = 40;
+
+    private transient TextField textField;
 
     private String message = "newIdea";
     private final int depth;
@@ -18,38 +21,46 @@ public class IdeaNode implements Serializable {
 
     public IdeaNode(IdeaNode parent){
 
-        this.textField = new TextField();
-        this.textField.setMinWidth(200);
-        this.textField.setMinHeight(40);
-        this.textField.setText(message);      //设定TextField的文本
-        this.textField.setOnAction(edited -> {
-            message = textField.getText();
-            TreeViewUtil.refreshGeneralView();
-        });
-        this.textField.setOnMouseReleased(selectNode -> MainView.setSelectedNode(IdeaNode.this));
-
         if(parent==null) depth = 1;
         else depth = parent.getDepth() + 1;
         this.nodeParent=parent;
         childIdeas = new ArrayList<>();
 
+        initNode();
     }
 
-    public TextField getTextField() {
-        return textField;
+    public void initNode(){
+        this.textField = new TextField();
+        this.textField.setMinWidth(DEFAULT_WIDTH);
+        this.textField.setMinHeight(DEFAULT_HEIGHT);
+        this.textField.setText(message);      //设定TextField的文本
+
+        this.textField.setOnAction(edited -> {
+            message = textField.getText();
+            TreeViewUtil.refreshGeneralView();
+        });
+        this.textField.setOnMouseReleased(selectNode -> MainView.setSelectedNode(IdeaNode.this));
     }
-    public String getMessage() {
-        return message;
+
+    public void initAllNodes(){
+        this.initNode();
+        if(!this.isLeaf()){
+            for(IdeaNode ideaNode : this.getChildIdea())
+                initAllNodes();
+        }
     }
-    public int getDepth() {
-        return depth;
-    }
-    public List<IdeaNode> getChildIdea() {
-        return childIdeas;
-    }
-    public IdeaNode getNodeParent() {
-        return nodeParent;
-    }
+
+    public TextField getTextField() { return textField;}
+    public String getMessage() { return message;}
+    public int getDepth() { return depth;}
+    public List<IdeaNode> getChildIdea() { return childIdeas;}
+    public IdeaNode getNodeParent() { return nodeParent;}
+
+    public boolean isLeaf(){ return this.getChildIdea().isEmpty();}
+
+    public void newChild(){ this.getChildIdea().add(new IdeaNode(this));}
+
+    public void newBrother(){ this.getNodeParent().getChildIdea().add(new IdeaNode(this.getNodeParent()));}
 
     public List<IdeaNode> getNodesInSpecificDepth(int targetDepth){
         List<IdeaNode> nodes = new ArrayList<>();
@@ -64,7 +75,7 @@ public class IdeaNode implements Serializable {
     }
 
     public int getDeepestDepth(){
-        int deepestDepth = 0;
+        int deepestDepth = 1;
         for(IdeaNode node:this.getLeaves()){
             if(node.getDepth()>deepestDepth) deepestDepth=node.getDepth();
         }
@@ -80,18 +91,6 @@ public class IdeaNode implements Serializable {
             }
         }
         return nodes;
-    }
-
-    public boolean isLeaf(){
-        return this.getChildIdea().isEmpty();
-    }
-
-    public void newChild(){
-        this.getChildIdea().add(new IdeaNode(this));
-    }
-
-    public void newBrother(){
-        this.getNodeParent().getChildIdea().add(new IdeaNode(this.getNodeParent()));
     }
 
 }

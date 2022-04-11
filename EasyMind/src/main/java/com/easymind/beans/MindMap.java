@@ -17,23 +17,11 @@ public class MindMap implements Serializable {
         ALIGNMENT = DisplayUtil.ALIGNMENT.LEFT_TO_RIGHT;
     }
 
-    public String getMindMapName() {
-        return mindMapName;
-    }
+    public String getMindMapName() { return mindMapName;}
+    public IdeaNode getCentralIdea() { return centralIdea;}
+    public DisplayUtil.ALIGNMENT getALIGNMENT() { return ALIGNMENT;}
 
-    public DisplayUtil.ALIGNMENT getALIGNMENT() {
-        return ALIGNMENT;
-    }
+    public void setMindMapName(String mindMapName) { this.mindMapName = mindMapName;}
+    public void setALIGNMENT(DisplayUtil.ALIGNMENT ALIGNMENT) { this.ALIGNMENT = ALIGNMENT;}
 
-    public IdeaNode getCentralIdea() {
-        return centralIdea;
-    }
-
-    public void setMindMapName(String mindMapName) {
-        this.mindMapName = mindMapName;
-    }
-
-    public void setALIGNMENT(DisplayUtil.ALIGNMENT ALIGNMENT) {
-        this.ALIGNMENT = ALIGNMENT;
-    }
 }

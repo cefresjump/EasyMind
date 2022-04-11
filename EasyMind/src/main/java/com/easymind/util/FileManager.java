@@ -2,9 +2,12 @@ package com.easymind.util;
 
 import com.easymind.beans.MindMap;
 import com.easymind.ui.WarnPage;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
+import javax.imageio.ImageIO;
 import java.io.*;
 
 public class FileManager {
@@ -50,10 +53,27 @@ public class FileManager {
             objectOutputStream.writeObject(mindMap);
             objectOutputStream.close();
         } catch (IOException e) {
-            e.printStackTrace();
             WarnPage.WarnReport(WarnPage.WARN_TYPE.SAVE_FAILED);
             return;
         }
         WarnPage.WarnReport(WarnPage.WARN_TYPE.SAVE_SUCCESS);
+    }
+
+    public static void exportAsPNG(ScrollPane scrollPane,MindMap mindMap){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialFileName(mindMap.getMindMapName());
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG","*.png"));
+        fileChooser.setTitle("select a directory");
+
+        File file = fileChooser.showSaveDialog(stage);
+        if(file!=null) {
+            try {
+                WritableImage image = scrollPane.getContent().snapshot(null,null);
+                ImageIO.write(SwingFXUtils.fromFXImage(image,null), "png", file);
+            } catch (IOException e) {
+                WarnPage.WarnReport(WarnPage.WARN_TYPE.EXPORT_FAILED);
+            }
+            WarnPage.WarnReport(WarnPage.WARN_TYPE.EXPORT_SUCCESS);
+        }
     }
 }

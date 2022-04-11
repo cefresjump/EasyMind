@@ -4,35 +4,32 @@ import com.easymind.beans.IdeaNode;
 import com.easymind.beans.MindMap;
 import javafx.scene.Group;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class DisplayUtil {
-    public enum ALIGNMENT implements Serializable {
+
+    public enum ALIGNMENT{
         CENTER,
         LEFT_TO_RIGHT,
         RIGHT_TO_LEFT
     }
 
-    private static AnchorPane canvas;
-    private static MindMap mindMap;
-
     private static final double DEFAULT_VSPACE = 30.0;
     private static final double DEFAULT_HSPACE = 50.0;
-    private static final double VSpace = DEFAULT_VSPACE;
-    private static final double HSpace = DEFAULT_HSPACE;
 
-    public static void init(AnchorPane canvas,MindMap mindMap){
-        DisplayUtil.canvas=canvas;
+    private static double VSpace = DEFAULT_VSPACE;
+    private static double HSpace = DEFAULT_HSPACE;
+    private static MindMap mindMap;
+
+    public static void init(MindMap mindMap){
         DisplayUtil.mindMap=mindMap;
     }
 
-    public static void refreshCanvas(){
+    public static Group getMindMapView(){
         IdeaNode centralIdea = mindMap.getCentralIdea();
         Map<IdeaNode,Group> ideaNodeNodeMap = new HashMap<>();
 
@@ -42,8 +39,9 @@ public class DisplayUtil {
         }
 
         int currentDepth = centralIdea.getDeepestDepth();
-        do{
+        while(currentDepth != 1){
             currentDepth--;
+
             for (IdeaNode parent: centralIdea.getNodesInSpecificDepth(currentDepth)) {
                 if(!parent.isLeaf()){
                     List<Group> groups = new ArrayList<>();
@@ -53,9 +51,8 @@ public class DisplayUtil {
                     ideaNodeNodeMap.put(parent,createGroup(parent.getTextField(),groups));
                 }
             }
-        }while (currentDepth != 1);
-
-        canvas.getChildren().add(ideaNodeNodeMap.get(centralIdea));
+        }
+        return ideaNodeNodeMap.get(centralIdea);
     }
 
     public static Group createGroup(TextField parent, List<Group> groups){
@@ -72,4 +69,11 @@ public class DisplayUtil {
         parent.setLayoutY(yOffset / 2 - parent.getHeight());
         return group;
     }
+
+    public static double getVSpace() { return VSpace;}
+    public static double getHSpace() { return HSpace;}
+
+    public static void setHSpace(double HSpace) { DisplayUtil.HSpace = HSpace;}
+    public static void setVSpace(double VSpace) { DisplayUtil.VSpace = VSpace;}
+
 }

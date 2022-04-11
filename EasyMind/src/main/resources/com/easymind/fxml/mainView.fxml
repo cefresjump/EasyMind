@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
 
 <VBox prefHeight="980.0" prefWidth="1850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easymind.ui.MainView">
    <children>
@@ -21,6 +19,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#openFile" text="打开" />
                         <MenuItem mnemonicParsing="false" onAction="#saveFile" text="保存" />
                         <MenuItem mnemonicParsing="false" onAction="#saveAs" text="另存为" />
+                        <MenuItem mnemonicParsing="false" onAction="#exportAsPNG" text="导出" />
                      </items>
                   </ContextMenu>
                </contextMenu>
@@ -44,9 +43,6 @@
       <HBox prefHeight="940.0" prefWidth="1850.0">
          <children>
             <ScrollPane fx:id="scrollBoard" prefHeight="920.0" prefWidth="1442.0">
-               <content>
-                  <AnchorPane fx:id="canvas" minHeight="0.0" minWidth="0.0" prefHeight="2000.0" prefWidth="3000.0" />
-               </content>
             </ScrollPane>
             <TabPane prefHeight="920.0" prefWidth="411.0" tabClosingPolicy="UNAVAILABLE">
                <tabs>

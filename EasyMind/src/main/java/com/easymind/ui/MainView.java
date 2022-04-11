@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 
 import java.io.File;
 
@@ -33,9 +32,6 @@ public class MainView{
     private ScrollPane scrollBoard;
 
     @FXML
-    private AnchorPane canvas;
-
-    @FXML
     private TreeView<String> generalView;
 
     //editButton编辑按钮的功能（新建，打开，保存，另存为,导出)
@@ -58,7 +54,10 @@ public class MainView{
         if(temp!=null){
             root = temp;
             mindMap = FileManager.readFile(root);
-            if(mindMap!=null) initMainView();
+            if(mindMap!=null) {
+                mindMap.getCentralIdea().initAllNodes();
+                initMainView();
+            }
         }
     }
 
@@ -75,7 +74,7 @@ public class MainView{
 
     @FXML
     private void exportAsPNG(){
-
+        FileManager.exportAsPNG(scrollBoard,mindMap);
     }
 
     //在编辑按钮右侧的mindMapNameTextField文本输入栏功能（修改思维导图名称)
@@ -112,7 +111,7 @@ public class MainView{
         if(selectedNode!=null){
             selectedNode.newChild();
 
-            DisplayUtil.refreshCanvas();
+            scrollBoard.setContent(DisplayUtil.getMindMapView());
             TreeViewUtil.refreshGeneralView();
         }
     }
@@ -122,7 +121,7 @@ public class MainView{
         if(selectedNode.getNodeParent()!=null){
            selectedNode.newBrother();
 
-            DisplayUtil.refreshCanvas();
+            scrollBoard.setContent(DisplayUtil.getMindMapView());
             TreeViewUtil.refreshGeneralView();
         }
     }
@@ -131,8 +130,8 @@ public class MainView{
     private void deleteNode() {
         if(selectedNode.getNodeParent()!=null){
             selectedNode.getNodeParent().getChildIdea().remove(selectedNode);
-            
-            DisplayUtil.refreshCanvas();
+
+            scrollBoard.setContent(DisplayUtil.getMindMapView());
             TreeViewUtil.refreshGeneralView();
         }
     }
@@ -140,30 +139,27 @@ public class MainView{
     @FXML
     private void setAlignLeftToRight(){
         mindMap.setALIGNMENT(DisplayUtil.ALIGNMENT.LEFT_TO_RIGHT);
-        DisplayUtil.refreshCanvas();
+        scrollBoard.setContent(DisplayUtil.getMindMapView());
     }
 
     @FXML
     private void setAlignCenter(){
         mindMap.setALIGNMENT(DisplayUtil.ALIGNMENT.CENTER);
-        DisplayUtil.refreshCanvas();
+        scrollBoard.setContent(DisplayUtil.getMindMapView());
     }
 
     @FXML
     private void setAlignRightToLeft(){
         mindMap.setALIGNMENT(DisplayUtil.ALIGNMENT.RIGHT_TO_LEFT);
-        DisplayUtil.refreshCanvas();
+        scrollBoard.setContent(DisplayUtil.getMindMapView());
     }
 
     private void initMainView(){
         mindMapNameTextField.setText(mindMap.getMindMapName());
         mindMapNameTextField.setEditable(true);
 
-        scrollBoard.setHvalue(0.5);
-        scrollBoard.setVvalue(0.5);
-        
-        DisplayUtil.init(canvas,mindMap);
-        DisplayUtil.refreshCanvas();
+        DisplayUtil.init(mindMap);
+        scrollBoard.setContent(DisplayUtil.getMindMapView());
 
         TreeViewUtil.init(generalView,mindMap.getCentralIdea());
         TreeViewUtil.refreshGeneralView();
