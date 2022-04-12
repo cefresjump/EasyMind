@@ -9,20 +9,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IdeaNode implements Serializable {
-    private static final double DEFAULT_WIDTH = 200;
-    private static final double DEFAULT_HEIGHT = 40;
+    private static final double DEFAULT_WIDTH = 200.0;
+    private static final double DEFAULT_HEIGHT = 40.0;
 
     private transient TextField textField;
 
-    private String message = "newIdea";
+    private String message;
     private final int depth;
     private final IdeaNode nodeParent;
     private final List<IdeaNode> childIdeas;
 
     public IdeaNode(IdeaNode parent){
 
-        if(parent==null) depth = 1;
-        else depth = parent.getDepth() + 1;
+        if(parent==null) {
+            depth = 1;
+            message = "CentralIdea";
+        }
+        else {
+            depth = parent.getDepth() + 1;
+            message = "NewIdea";
+        }
         this.nodeParent=parent;
         childIdeas = new ArrayList<>();
 
@@ -46,7 +52,7 @@ public class IdeaNode implements Serializable {
         this.initNode();
         if(!this.isLeaf()){
             for(IdeaNode ideaNode : this.getChildIdea())
-                initAllNodes();
+                ideaNode.initAllNodes();
         }
     }
 
@@ -60,7 +66,7 @@ public class IdeaNode implements Serializable {
 
     public void newChild(){ this.getChildIdea().add(new IdeaNode(this));}
 
-    public void newBrother(){ this.getNodeParent().getChildIdea().add(new IdeaNode(this.getNodeParent()));}
+    public void newBrother(){ this.getNodeParent().newChild();}
 
     public List<IdeaNode> getNodesInSpecificDepth(int targetDepth){
         List<IdeaNode> nodes = new ArrayList<>();

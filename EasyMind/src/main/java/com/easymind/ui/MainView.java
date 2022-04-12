@@ -111,7 +111,7 @@ public class MainView{
         if(selectedNode!=null){
             selectedNode.newChild();
 
-            scrollBoard.setContent(DisplayUtil.getMindMapView());
+            scrollBoard.setContent(DisplayUtil.refreshMindMapView(mindMap.getCentralIdea(),mindMap.getALIGNMENT()));
             TreeViewUtil.refreshGeneralView();
         }
     }
@@ -121,7 +121,7 @@ public class MainView{
         if(selectedNode.getNodeParent()!=null){
            selectedNode.newBrother();
 
-            scrollBoard.setContent(DisplayUtil.getMindMapView());
+            scrollBoard.setContent(DisplayUtil.refreshMindMapView(mindMap.getCentralIdea(),mindMap.getALIGNMENT()));
             TreeViewUtil.refreshGeneralView();
         }
     }
@@ -131,7 +131,7 @@ public class MainView{
         if(selectedNode.getNodeParent()!=null){
             selectedNode.getNodeParent().getChildIdea().remove(selectedNode);
 
-            scrollBoard.setContent(DisplayUtil.getMindMapView());
+            scrollBoard.setContent(DisplayUtil.refreshMindMapView(mindMap.getCentralIdea(),mindMap.getALIGNMENT()));
             TreeViewUtil.refreshGeneralView();
         }
     }
@@ -139,27 +139,26 @@ public class MainView{
     @FXML
     private void setAlignLeftToRight(){
         mindMap.setALIGNMENT(DisplayUtil.ALIGNMENT.LEFT_TO_RIGHT);
-        scrollBoard.setContent(DisplayUtil.getMindMapView());
+        scrollBoard.setContent(DisplayUtil.refreshMindMapView(mindMap.getCentralIdea(),mindMap.getALIGNMENT()));
     }
 
     @FXML
     private void setAlignCenter(){
         mindMap.setALIGNMENT(DisplayUtil.ALIGNMENT.CENTER);
-        scrollBoard.setContent(DisplayUtil.getMindMapView());
+        scrollBoard.setContent(DisplayUtil.refreshMindMapView(mindMap.getCentralIdea(),mindMap.getALIGNMENT()));
     }
 
     @FXML
     private void setAlignRightToLeft(){
         mindMap.setALIGNMENT(DisplayUtil.ALIGNMENT.RIGHT_TO_LEFT);
-        scrollBoard.setContent(DisplayUtil.getMindMapView());
+        scrollBoard.setContent(DisplayUtil.refreshMindMapView(mindMap.getCentralIdea(),mindMap.getALIGNMENT()));
     }
 
     private void initMainView(){
         mindMapNameTextField.setText(mindMap.getMindMapName());
         mindMapNameTextField.setEditable(true);
 
-        DisplayUtil.init(mindMap);
-        scrollBoard.setContent(DisplayUtil.getMindMapView());
+        scrollBoard.setContent(DisplayUtil.refreshMindMapView(mindMap.getCentralIdea(),mindMap.getALIGNMENT()));
 
         TreeViewUtil.init(generalView,mindMap.getCentralIdea());
         TreeViewUtil.refreshGeneralView();

@@ -20,7 +20,7 @@ public class TreeViewUtil {
 
     private static TreeItem<String> createTreeItem(IdeaNode node){
         TreeItem<String> treeItem = new TreeItem<>(node.getMessage());
-        if(node.getChildIdea()!=null){
+        if(!node.isLeaf()){
             for(IdeaNode ideaNode : node.getChildIdea()){
                 treeItem.getChildren().add(createTreeItem(ideaNode));
             }

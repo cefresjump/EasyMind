@@ -18,7 +18,7 @@ public class Controller {
 
         stage.setTitle("EasyMind");
         stage.initStyle(StageStyle.TRANSPARENT);
-        stage.setResizable(true);
+        stage.setResizable(false);
 
         Scene scene = null;
         try{
